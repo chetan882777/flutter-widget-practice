@@ -12,7 +12,6 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-
   var _questionIndex = 0;
 
   void _answerQuestion() {
@@ -25,8 +24,18 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     var questions = [
-      'What\' your favorite color?',
-      'What\' your favorite animal?'
+      {
+        'questionText': 'What\' your favorite color?',
+        'answers': ['Black', 'Red', 'Green', 'White']
+      },
+      {
+        'questionText': 'What\' your favorite animal?',
+        'answers': ['Rabbit', 'Snake', 'Elephant', 'Lion']
+      },
+      {
+        'questionText': 'What\' your favorite instructor?',
+        'answers': ['Chetan', 'Chetan', 'Chetan', 'Chetan']
+      },
     ];
     return MaterialApp(
       title: 'Flutter Demo',
@@ -38,10 +47,10 @@ class _MyAppState extends State<MyApp> {
             child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Question(questions[_questionIndex]),
-            Answer(_answerQuestion),
-            Answer(_answerQuestion),
-            Answer(_answerQuestion),
+            Question(questions[_questionIndex]['questionText']),
+            ...(questions[_questionIndex]['answers'] as List<String>)
+                .map((answer) => Answer(_answerQuestion, answer))
+                .toList(),
           ],
         )),
       ),
