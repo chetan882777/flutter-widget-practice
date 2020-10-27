@@ -4,9 +4,28 @@ void main() {
   runApp(MyApp());
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
+  @override
+  _MyAppState createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+
+  var questionIndex = 0;
+
+  void answerQuestion() {
+    setState(() {
+      questionIndex = questionIndex + 1;
+    });
+    print(questionIndex);
+  }
+
   @override
   Widget build(BuildContext context) {
+    var questions = [
+      'What\' your favorite color?',
+      'What\' your favorite animal?'
+    ];
     return MaterialApp(
       title: 'Flutter Demo',
       home: Scaffold(
@@ -17,49 +36,22 @@ class MyApp extends StatelessWidget {
             child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            TextWidget("Hello"),
-            SizedBox(
-              height: 8,
+            Text(questions[questionIndex]),
+            RaisedButton(
+              child: Text("Ans 1"),
+              onPressed: answerQuestion,
             ),
-            TextWidget("World"),
-            SizedBox(
-              height: 8,
+            RaisedButton(
+              child: Text("Ans 2"),
+              onPressed: answerQuestion,
             ),
-            TextWidget("How are you?"),
+            RaisedButton(
+              child: Text("Ans 3"),
+              onPressed: answerQuestion,
+            ),
           ],
         )),
       ),
-    );
-  }
-}
-
-class TextWidget extends StatefulWidget {
-  final String name;
-
-  const TextWidget(this.name);
-
-  @override
-  State<StatefulWidget> createState() => _TextWidgetState();
-}
-
-class _TextWidgetState extends State<TextWidget> {
-  int count = 0;
-
-  @override
-  Widget build(BuildContext context) {
-    return GestureDetector(
-        onTap: () {
-          setState(() {
-            count++;
-          });
-        },
-        child: DecoratedBox(
-          decoration: BoxDecoration(color: Colors.blueAccent),
-          child: Padding(
-            padding: EdgeInsets.all(8.0),
-            child: Text("${widget.name} - $count"),
-          ),
-        )
     );
   }
 }
