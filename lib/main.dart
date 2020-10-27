@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import './questions.dart';
+import './answer.dart';
 
 void main() {
   runApp(MyApp());
@@ -38,18 +39,9 @@ class _MyAppState extends State<MyApp> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Question(questions[_questionIndex]),
-            RaisedButton(
-              child: Text("Ans 1"),
-              onPressed: _answerQuestion,
-            ),
-            RaisedButton(
-              child: Text("Ans 2"),
-              onPressed: _answerQuestion,
-            ),
-            RaisedButton(
-              child: Text("Ans 3"),
-              onPressed: _answerQuestion,
-            ),
+            Answer(_answerQuestion),
+            Answer(_answerQuestion),
+            Answer(_answerQuestion),
           ],
         )),
       ),
