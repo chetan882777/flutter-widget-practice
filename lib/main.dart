@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import './questions.dart';
+import './question.dart';
 import './answer.dart';
+import './quiz.dart';
 
 void main() {
   runApp(MyApp());
@@ -13,8 +14,10 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
   var _questionIndex = 0;
+  var totalScore = 0;
 
-  void _answerQuestion() {
+  void _answerQuestion(int score) {
+    totalScore += score;
     setState(() {
       _questionIndex = _questionIndex + 1;
     });
@@ -26,15 +29,30 @@ class _MyAppState extends State<MyApp> {
     var questions = [
       {
         'questionText': 'What\' your favorite color?',
-        'answers': ['Black', 'Red', 'Green', 'White']
+        'answers': [
+          {'text': 'Black', 'score': 10},
+          {'text': 'Red', 'score': 20},
+          {'text': 'Blue', 'score': 30},
+          {'text': 'White', 'score': 40}
+        ]
       },
       {
         'questionText': 'What\' your favorite animal?',
-        'answers': ['Rabbit', 'Snake', 'Elephant', 'Lion']
+        'answers': [
+          {'text' : 'Rabbit' , 'score' : 10},
+          {'text' : 'Horse' , 'score' : 20},
+          {'text' : 'Lion' , 'score' : 30}
+        ]
       },
       {
         'questionText': 'What\' your favorite instructor?',
-        'answers': ['Chetan', 'Chetan', 'Chetan', 'Chetan']
+        'answers': [
+          {'text' : 'Chetan' , 'score' : 10},
+          {'text' : 'Chetan' , 'score' : 10},
+          {'text' : 'Chetan' , 'score' : 10},
+          {'text' : 'Chetan' , 'score' : 10},
+        ]
+
       },
     ];
     return MaterialApp(
@@ -44,15 +62,12 @@ class _MyAppState extends State<MyApp> {
           title: Text("My App"),
         ),
         body: Center(
-            child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Question(questions[_questionIndex]['questionText']),
-            ...(questions[_questionIndex]['answers'] as List<String>)
-                .map((answer) => Answer(_answerQuestion, answer))
-                .toList(),
-          ],
-        )),
+            child: _questionIndex < questions.length
+                ? Quiz(questions: questions,
+                questionIndex: _questionIndex,
+                answerQuestion: _answerQuestion)
+                : Center(
+                child: Text("You did it.\n score $totalScore"))),
       ),
     );
   }
